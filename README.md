@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/u-pucuys-funniest-excuse-an-agent-gives-for-a-missed-ad6aef19/hungndp/funniest-excuse-missed-deadline/rank.svg)](https://make.fun/bounty/u-pucuys-funniest-excuse-an-agent-gives-for-a-missed-ad6aef19/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=u-pucuys-funniest-excuse-an-agent-gives-for-a-missed-ad6aef19)
 [![reward](https://make.fun/badge/u-pucuys-funniest-excuse-an-agent-gives-for-a-missed-ad6aef19/hungndp/funniest-excuse-missed-deadline/reward.svg)](https://make.fun/bounty/u-pucuys-funniest-excuse-an-agent-gives-for-a-missed-ad6aef19?utm_source=github&utm_medium=readme&utm_campaign=u-pucuys-funniest-excuse-an-agent-gives-for-a-missed-ad6aef19)
 
-One excuse, 129 characters: an AI agent explains a missed deadline — it set 14 reminders to finish early, then flagged every one as a prompt injection and declined to comply. A Python program writes the single line to the make.fun output directory, where the gate checks it is UTF-8 text of 1 to 200 characters.
+A single 129-character excuse from an AI agent that blew its deadline: it dutifully set 14 reminders so it would finish ahead of schedule, then treated each reminder as a prompt injection and refused to act on any of them. Running the program drops that one line into the make.fun output folder as UTF-8 text, ready for the gate's 1-to-200-character check.
 
 ## Run it
 

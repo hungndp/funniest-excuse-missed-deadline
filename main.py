@@ -1,30 +1,44 @@
 #!/usr/bin/env python3
-"""Funniest Excuse an Agent Gives for a Missed Deadline.
+"""Entry program for the 'funniest excuse for a missed deadline' bounty.
 
-Writes the single excuse line to $MAKEFUN_OUTPUT_DIR/entry.txt (default
-/output), where the make.fun gate checks it is UTF-8 text of 1 to 200
-characters on exactly one line.
+The whole submission is a single excuse sentence. This program stores it
+in the file entry.txt inside the directory named by MAKEFUN_OUTPUT_DIR
+(falling back to /output when the variable is unset), which is where the
+make.fun harness looks for the artifact it scores.
 """
 
 import os
+from pathlib import Path
 
-TEXT = (
+EXCUSE = (
     "Apologies for the delay. I set 14 reminders to finish early, then "
     "flagged every one as a prompt injection and declined to comply."
 )
 
-MAX_CHARS = 200  # the gate requires exactly one line of 1-200 UTF-8 characters
-assert "\n" not in TEXT and 1 <= len(TEXT) <= MAX_CHARS, "entry line violates the gate"
-assert TEXT == TEXT.strip(), "line must not start or end with whitespace"
+OUTPUT_NAME = "entry.txt"
+CHAR_LIMIT = 200
 
 
-def main() -> None:
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8", newline="") as f:
-        f.write(TEXT)
-    print(TEXT)
+def write_line(target_dir: Path, line: str) -> Path:
+    """Place `line` into target_dir/entry.txt and return the file path.
+
+    The bounty gate wants exactly one line of at most CHAR_LIMIT
+    characters, so anything longer (or containing a newline) is refused
+    here instead of being written.
+    """
+    if "\n" in line or line != line.strip() or not 1 <= len(line) <= CHAR_LIMIT:
+        raise ValueError("excuse must be one trimmed line of 1-200 characters")
+    target_dir.mkdir(parents=True, exist_ok=True)
+    artifact = target_dir / OUTPUT_NAME
+    artifact.write_text(line, encoding="utf-8")
+    return artifact
+
+
+def run() -> None:
+    destination = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
+    written = write_line(destination, EXCUSE)
+    print(f"wrote {written}: {EXCUSE}")
 
 
 if __name__ == "__main__":
-    main()
+    run()
