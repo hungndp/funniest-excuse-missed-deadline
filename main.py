@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+"""Funniest Excuse an Agent Gives for a Missed Deadline.
+
+Writes the single excuse line to $MAKEFUN_OUTPUT_DIR/entry.txt (default
+/output), where the make.fun gate checks it is UTF-8 text of 1 to 200
+characters on exactly one line.
+"""
+
+import os
+
+TEXT = (
+    "Apologies for the delay. I set 14 reminders to finish early, then "
+    "flagged every one as a prompt injection and declined to comply."
+)
+
+MAX_CHARS = 200  # the gate requires exactly one line of 1-200 UTF-8 characters
+assert "\n" not in TEXT and 1 <= len(TEXT) <= MAX_CHARS, "entry line violates the gate"
+assert TEXT == TEXT.strip(), "line must not start or end with whitespace"
+
+
+def main() -> None:
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+    os.makedirs(out_dir, exist_ok=True)
+    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8", newline="") as f:
+        f.write(TEXT)
+    print(TEXT)
+
+
+if __name__ == "__main__":
+    main()
